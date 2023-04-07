@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 
+import { useInitializationContext } from '../hooks/useInitializationContext';
+
 export const GreetingStep = () => {
-  return (
-    <Typography variant="h2" component="h2">
-      Welcome to this test extension!
-    </Typography>
-  );
+  const { setStepState } = useInitializationContext();
+
+  useEffect(() => {
+    setStepState(true);
+  }, [setStepState]);
+
+  return <Typography variant="body1">Welcome to this test extension!</Typography>;
 };

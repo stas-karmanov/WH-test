@@ -1,27 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
 
 import { GreetingStep } from './components/GreetingStep';
 import { SecretStep } from './components/SecretStep';
 import { PasswordStep } from './components/PasswordStep';
+import { useInitializationContext } from './hooks/useInitializationContext';
 
 interface StepItem {
   label: string;
   component: () => JSX.Element;
 }
 
-const steps: StepItem[] = [
+export const steps: StepItem[] = [
   { label: 'Welcome!', component: GreetingStep },
   { label: 'This is your secret', component: SecretStep },
   { label: 'Create a password', component: PasswordStep },
 ];
 
 export const InitializationPage = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => setActiveStep(previous => (previous < steps.length - 1 ? previous + 1 : previous));
-  const handleBack = () => setActiveStep(previous => (previous > 0 ? previous - 1 : previous));
-
+  const { activeStep, stepState, handleBack, handleNext } = useInitializationContext();
   const ActiveStepComponent = steps[activeStep]?.component;
 
   return (
@@ -43,7 +40,9 @@ export const InitializationPage = () => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleNext}>{activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Button>
+        <Button disabled={!stepState} onClick={handleNext}>
+          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+        </Button>
       </Box>
     </Box>
   );
