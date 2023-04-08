@@ -1,7 +1,6 @@
 import { SecretGenerator } from './SecretGenerator';
 import { CacheService } from './CacheService';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
-import { UserEntity } from './entities/UserEntity';
 
 export class InitializationService {
   private readonly secretCacheKey: string = 'userSecret';
@@ -14,8 +13,12 @@ export class InitializationService {
   ) {}
 
   async isApplicationInitialized(): Promise<boolean> {
-    const user: UserEntity | null = await this.userRepository.find();
-    return !!user;
+    try {
+      await this.userRepository.find();
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   initializeUser(password: string): void {

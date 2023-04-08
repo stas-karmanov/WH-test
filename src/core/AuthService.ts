@@ -1,4 +1,4 @@
-import { UserEntity } from './entities/UserEntity';
+import { UserEntity } from './UserEntity';
 import { HashService } from './HashService';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
 import { SessionRepositoryPort } from './ports/SessionRepositoryPort';
@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   async login(password: string): Promise<UserEntity> {
-    const user: UserEntity = await this.findUser();
+    const user: UserEntity = await this.userRepository.find();
     await this.checkPassword(user, password);
     await this.sessionRepository.create();
     return user;
@@ -27,12 +27,6 @@ export class AuthService {
 
   async isAuthenticated(): Promise<boolean> {
     return this.sessionRepository.has();
-  }
-
-  private async findUser(): Promise<UserEntity> {
-    const user: UserEntity | null = await this.userRepository.find();
-    if (!user) throw new Error('User not found');
-    return user;
   }
 
   private async checkPassword(user: UserEntity, password: string): Promise<void> {

@@ -1,6 +1,6 @@
-import { UserEntity } from '../entities/UserEntity';
+import { UserEntity } from '../UserEntity';
 
 export interface UserRepositoryPort {
   save(user: UserEntity): void;
-  find(): Promise<UserEntity | null>;
+  find(): Promise<UserEntity>;
 }
