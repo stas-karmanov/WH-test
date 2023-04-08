@@ -9,6 +9,10 @@ export class StorageService {
     localStorage.setItem(key, serializedData);
   }
 
+  delete(key: string): void {
+    localStorage.removeItem(key);
+  }
+
   private parseRecord<T = unknown>(record: string): T | null {
     try {
       return JSON.parse(record) as T;

@@ -16,6 +16,10 @@ export class ApplicationFacade implements ApplicationPort {
     return this.authService.login(password);
   }
 
+  async isAuthenticated(): Promise<boolean> {
+    return this.authService.isAuthenticated();
+  }
+
   async initializeUser(password: string): Promise<void> {
     this.initializationService.initializeUser(password);
   }
