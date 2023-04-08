@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { FormValues, useForm } from '../../../common/useForm';
 import { useInitializationContext } from '../hooks/useInitializationContext';
 import { useApplicationPort } from '../../../../ApplicationContext';
+import { Control } from '../../../common/Control';
 
 interface PasswordFormValues extends FormValues {
   password: string;
@@ -59,30 +60,26 @@ export const PasswordStep: FC = () => {
         alignItems: 'center',
       }}
     >
-      <TextField
+      <Control
         sx={{ mr: 1 }}
         type="password"
         label="Password"
         name="password"
         required
-        value={controls.password.value}
-        error={!controls.password.valid}
-        helperText={!controls.password.valid && controls.password.error}
+        control={controls.password}
         onChange={handelInputChange}
         onBlur={handleBlur}
-      ></TextField>
+      ></Control>
 
-      <TextField
+      <Control
         type="password"
         label="Confirm Password"
         name="confirmation"
         required
-        value={controls.confirmation.value}
-        error={!controls.confirmation.valid}
-        helperText={!controls.confirmation.valid && controls.confirmation.error}
+        control={controls.confirmation}
         onChange={handelInputChange}
         onBlur={handleBlur}
-      ></TextField>
+      ></Control>
     </Box>
   );
 };
