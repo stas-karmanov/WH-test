@@ -25,8 +25,18 @@ export class AuthService {
     return user;
   }
 
+  async logout(): Promise<void> {
+    await this.sessionRepository.delete();
+  }
+
   async isAuthenticated(): Promise<boolean> {
     return this.sessionRepository.has();
+  }
+
+  async checkAuthentication(): Promise<void> {
+    if (!(await this.isAuthenticated())) {
+      throw new Error('Not authenticated');
+    }
   }
 
   private async checkPassword(user: UserEntity, password: string): Promise<void> {

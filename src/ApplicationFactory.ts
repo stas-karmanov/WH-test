@@ -27,6 +27,6 @@ export class ApplicationFactory {
     const authService: AuthService = new AuthService(hashService, userRepository, sessionRepository);
     const userMapper: UserMapper = new UserMapper();
 
-    return new ApplicationFacade(authService, initializationService, userRepository, userMapper);
+    return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator);
   }
 }
