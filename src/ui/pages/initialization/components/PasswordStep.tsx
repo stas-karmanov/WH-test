@@ -38,10 +38,6 @@ export const PasswordStep: FC = () => {
   });
 
   useEffect(() => {
-    makeStepInvalid();
-  }, [makeStepInvalid]);
-
-  useEffect(() => {
     if (!valid) {
       makeStepInvalid();
     } else {
