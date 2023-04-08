@@ -1,13 +1,14 @@
 import { ApplicationPort } from './ports/ApplicationPort';
 import { UserEntity } from './entities/UserEntity';
 import { AuthService } from './AuthService';
-import { SecretService } from './SecretService';
+import { InitializationService } from './InitializationService';
 
 export class ApplicationFacade implements ApplicationPort {
-  constructor(private readonly authService: AuthService, private readonly secretService: SecretService) {}
+  constructor(private readonly authService: AuthService, private readonly initializationService: InitializationService) {}
 
-  async register(password: string): Promise<UserEntity> {
-    const secret = 'awdkqwjdmoqwdo132';
+  async register(): Promise<UserEntity> {
+    const secret: string = this.initializationService.extractSecret();
+    const password: string = this.initializationService.extractUserPassword();
     return this.authService.register(password, secret);
   }
 
@@ -15,7 +16,11 @@ export class ApplicationFacade implements ApplicationPort {
     return this.authService.login(password);
   }
 
-  async generateSecret(): Promise<string> {
-    return this.secretService.generate();
+  async initializeUser(password: string): Promise<void> {
+    this.initializationService.initializeUser(password);
+  }
+
+  async initializeSecret(): Promise<string> {
+    return this.initializationService.initializeSecret();
   }
 }

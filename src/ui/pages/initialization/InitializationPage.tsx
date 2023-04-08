@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
 
 import { GreetingStep } from './components/GreetingStep';
@@ -8,7 +8,7 @@ import { useInitializationContext } from './hooks/useInitializationContext';
 
 interface StepItem {
   label: string;
-  component: () => JSX.Element;
+  component: FC;
 }
 
 export const steps: StepItem[] = [
@@ -17,8 +17,8 @@ export const steps: StepItem[] = [
   { label: 'Create a password', component: PasswordStep },
 ];
 
-export const InitializationPage = () => {
-  const { activeStep, stepState, handleBack, handleNext } = useInitializationContext();
+export const InitializationPage: FC = () => {
+  const { activeStep, stepState, handleNext } = useInitializationContext();
   const ActiveStepComponent = steps[activeStep]?.component;
 
   return (
@@ -36,9 +36,6 @@ export const InitializationPage = () => {
       {ActiveStepComponent && <ActiveStepComponent />}
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
-          Back
-        </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <Button disabled={!stepState} onClick={handleNext}>
           {activeStep === steps.length - 1 ? 'Finish' : 'Next'}

@@ -1,19 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import { useInitializationContext } from '../hooks/useInitializationContext';
+import { useApplicationPort } from '../../../../ApplicationContext';
 
-export const SecretStep = () => {
-  const { setStepState } = useInitializationContext();
+export const SecretStep: FC = () => {
+  const { makeStepValid, makeStepInvalid } = useInitializationContext();
+  const [secret, setSecret] = useState('');
+  const applicationPort = useApplicationPort();
 
   useEffect(() => {
-    setStepState(true);
-  }, [setStepState]);
+    makeStepInvalid();
+  }, [makeStepInvalid]);
+
+  useEffect(() => {
+    applicationPort.initializeSecret().then((s: string) => {
+      setSecret(s);
+      makeStepValid();
+    });
+  }, [applicationPort, makeStepValid]);
 
   return (
     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box sx={{ width: '80%' }}>
-        <Typography variant="body1">EifkiEFiwfwefol13</Typography>
+        <Typography variant="body1">{secret}</Typography>
       </Box>
     </Box>
   );

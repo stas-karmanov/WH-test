@@ -1,21 +1,41 @@
 import { useCallback, useState } from 'react';
 
 import { steps } from '../InitializationPage';
+import { useApplicationPort } from '../../../../ApplicationContext';
 
 export interface InitializationState {
   activeStep: number;
   stepState: boolean;
+
   handleNext(): void;
-  handleBack(): void;
-  setStepState(state: boolean): void;
+
+  makeStepValid(): void;
+
+  makeStepInvalid(): void;
 }
 
+const isLastStep = (activeStep: number): boolean => {
+  return activeStep === steps.length - 1;
+};
+
 export const useInitializationState = (): InitializationState => {
+  const applicationPort = useApplicationPort();
   const [activeStep, setActiveStep] = useState(0);
   const [stepState, setStepState] = useState(false);
 
-  const handleNext = useCallback(() => setActiveStep(previous => (previous < steps.length - 1 ? previous + 1 : previous)), [setActiveStep]);
-  const handleBack = useCallback(() => setActiveStep(previous => (previous > 0 ? previous - 1 : previous)), [setActiveStep]);
+  const makeStepValid = useCallback(() => setStepState(true), [setStepState]);
+  const makeStepInvalid = useCallback(() => setStepState(false), [setStepState]);
 
-  return { activeStep, stepState, handleNext, handleBack, setStepState };
+  const handleNext = useCallback(() => {
+    if (!stepState) return;
+
+    if (isLastStep(activeStep)) {
+      // need to register and navigate to login page
+      applicationPort.register();
+    }
+
+    setActiveStep(previous => (previous < steps.length - 1 ? previous + 1 : previous));
+  }, [setActiveStep, stepState, activeStep, applicationPort]);
+
+  return { activeStep, stepState, handleNext, makeStepValid, makeStepInvalid };
 };

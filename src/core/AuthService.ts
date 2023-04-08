@@ -14,7 +14,7 @@ export class AuthService {
 
   async login(password: string): Promise<UserEntity> {
     const user: UserEntity = await this.findUser();
-    await this.validatePassword(user, password);
+    await this.checkPassword(user, password);
     return user;
   }
 
@@ -24,9 +24,9 @@ export class AuthService {
     return user;
   }
 
-  private async validatePassword(user: UserEntity, password: string): Promise<void> {
+  private async checkPassword(user: UserEntity, password: string): Promise<void> {
     if (!(await this.hashService.compare(user.getPassword(), password))) {
-      throw new Error('Invalid password');
+      throw new Error('Wrong password');
     }
   }
 }

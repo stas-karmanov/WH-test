@@ -1,5 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   return <div>Login Page</div>;
 };

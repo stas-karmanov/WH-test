@@ -1,12 +1,35 @@
-import React, { useEffect } from 'react';
-import { useInitializationContext } from '../hooks/useInitializationContext';
+import React, { FC, useEffect } from 'react';
+import { Box, TextField } from '@mui/material';
 
-export const PasswordStep = () => {
-  const { setStepState } = useInitializationContext();
+import { useInitializationContext } from '../hooks/useInitializationContext';
+import { useApplicationPort } from '../../../../ApplicationContext';
+
+export const PasswordStep: FC = () => {
+  const { makeStepValid, makeStepInvalid } = useInitializationContext();
+  const applicationPort = useApplicationPort();
 
   useEffect(() => {
-    setStepState(false);
-  }, [setStepState]);
+    makeStepInvalid();
+  }, [makeStepInvalid]);
 
-  return <div>Create a password</div>;
+  useEffect(() => {
+    applicationPort.initializeUser('tempPass').then(() => {
+      makeStepValid();
+    });
+  }, [applicationPort, makeStepValid]);
+
+  return (
+    <Box
+      component="form"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& > :not(style)': { m: 1 },
+      }}
+    >
+      <TextField type="password" label="Password" required></TextField>
+      <TextField type="password" label="Confirm Password" required></TextField>
+    </Box>
+  );
 };

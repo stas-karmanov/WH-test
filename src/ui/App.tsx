@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ThemeProvider, createTheme, Theme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -9,7 +9,7 @@ const theme: Theme = createTheme({
   palette: { mode: 'dark' },
 });
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
