@@ -5,6 +5,7 @@ import { InitializationContextProvider } from '../pages/initialization/Initializ
 import { InitializationPage } from '../pages/initialization/InitializationPage';
 import { LoginPage } from '../pages/LoginPage';
 import { AccountPage } from '../pages/AccountPage';
+import { GuarderRoute } from './GuarderRoute';
 
 export enum Page {
   Initialization = 'initialization',
@@ -19,5 +20,9 @@ export const routerConfig: RouterConfig = {
     </InitializationContextProvider>
   ),
   [Page.Login]: <LoginPage />,
-  [Page.Account]: <AccountPage />,
+  [Page.Account]: (
+    <GuarderRoute>
+      <AccountPage />
+    </GuarderRoute>
+  ),
 };

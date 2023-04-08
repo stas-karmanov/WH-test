@@ -9,12 +9,16 @@ export const useInitialNavigation = () => {
   const applicationPort = useApplicationPort();
 
   useEffect(() => {
-    applicationPort.isAuthenticated().then((isAuthenticated: boolean) => {
-      if (isAuthenticated) {
-        navigate(Page.Account);
-      } else {
-        navigate(Page.Login);
-      }
-    });
+    Promise.all([applicationPort.isAuthenticated(), applicationPort.isInitialized()]).then(
+      ([isAuthenticated, isInitialized]: [boolean, boolean]) => {
+        if (isAuthenticated && isInitialized) {
+          navigate(Page.Account);
+        } else if (isInitialized) {
+          navigate(Page.Login);
+        } else {
+          navigate(Page.Initialization);
+        }
+      },
+    );
   }, [applicationPort, navigate]);
 };

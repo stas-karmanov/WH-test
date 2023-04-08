@@ -22,7 +22,7 @@ export class ApplicationFactory {
     const cacheService: CacheService = new CacheService();
     const secretGenerator: SecretGenerator = new SecretGenerator();
     const hashService: HashService = new HashService();
-    const initializationService: InitializationService = new InitializationService(secretGenerator, cacheService);
+    const initializationService: InitializationService = new InitializationService(secretGenerator, cacheService, userRepository);
     const authService: AuthService = new AuthService(hashService, userRepository, sessionRepository);
 
     return new ApplicationFacade(authService, initializationService);
