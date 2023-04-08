@@ -3,7 +3,7 @@ export class HashService {
     return data;
   }
 
-  async compare(_hash: string, _data: string): Promise<boolean> {
-    return true;
+  async compare(hash: string, data: string): Promise<boolean> {
+    return hash === data;
   }
 }

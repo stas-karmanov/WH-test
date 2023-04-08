@@ -1,30 +1,26 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ThemeProvider, createTheme, Theme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import { InitializationPage } from './pages/initialization/InitializationPage';
-import { InitializationContextProvider } from './pages/initialization/InitializationContext';
-import { Router, RouterConfig } from './router/Router';
-import { LoginPage } from './pages/LoginPage';
+import { RouterOutlet } from './router/RouterOutlet';
+import { useNavigate } from './router/useNavigate';
+import { Page } from './router/config';
 
 const theme: Theme = createTheme({
   palette: { mode: 'dark' },
 });
 
-const routerConfig: RouterConfig = {
-  initialization: (
-    <InitializationContextProvider>
-      <InitializationPage />
-    </InitializationContextProvider>
-  ),
-  login: <LoginPage />,
-};
-
 export const App: FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(Page.Login);
+  }, [navigate]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router config={routerConfig}></Router>
+      <RouterOutlet />
     </ThemeProvider>
   );
 };

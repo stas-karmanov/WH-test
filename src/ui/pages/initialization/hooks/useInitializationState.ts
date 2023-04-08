@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import { steps } from '../InitializationPage';
 import { useApplicationPort } from '../../../../ApplicationContext';
 import { useNavigate } from '../../../router/useNavigate';
+import { Page } from '../../../router/config';
 
 export interface InitializationState {
   activeStep: number;
@@ -32,7 +33,7 @@ export const useInitializationState = (): InitializationState => {
     if (!stepState) return;
 
     if (isLastStep(activeStep)) {
-      applicationPort.register().then(() => navigate('login'));
+      applicationPort.register().then(() => navigate(Page.Login));
     }
 
     setActiveStep(previous => (previous < steps.length - 1 ? previous + 1 : previous));

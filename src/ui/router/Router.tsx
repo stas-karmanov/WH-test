@@ -1,4 +1,4 @@
-import { createContext, FC, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 
 export interface RouterConfig {
   [page: string]: JSX.Element;
@@ -6,6 +6,8 @@ export interface RouterConfig {
 
 export interface RouterState {
   activePage: string;
+  Page?: JSX.Element;
+
   setActivePage(page: string): void;
 }
 
@@ -14,12 +16,12 @@ export const RouterContext = createContext<RouterState>({
   setActivePage(_page: string) {},
 });
 
-export interface RouterProps {
+export interface RouterProps extends PropsWithChildren {
   config: RouterConfig;
 }
 
-export const Router: FC<RouterProps> = ({ config }: RouterProps) => {
-  const [activePage, setActivePage] = useState('initialization');
+export const Router: FC<RouterProps> = ({ config, children }: RouterProps) => {
+  const [activePage, setActivePage] = useState<string>('');
   const Page: JSX.Element | undefined = config[activePage];
-  return <RouterContext.Provider value={{ activePage, setActivePage }}>{Page}</RouterContext.Provider>;
+  return <RouterContext.Provider value={{ activePage, Page, setActivePage }}>{children}</RouterContext.Provider>;
 };
