@@ -8,18 +8,18 @@ import { useInitializationContext } from './hooks/useInitializationContext';
 
 interface StepItem {
   label: string;
-  component: FC;
+  element: JSX.Element;
 }
 
 export const steps: StepItem[] = [
-  { label: 'Welcome!', component: GreetingStep },
-  { label: 'This is your secret', component: SecretStep },
-  { label: 'Create a password', component: PasswordStep },
+  { label: 'Welcome!', element: <GreetingStep /> },
+  { label: 'This is your secret', element: <SecretStep /> },
+  { label: 'Create a password', element: <PasswordStep /> },
 ];
 
 export const InitializationPage: FC = () => {
   const { activeStep, stepState, handleNext } = useInitializationContext();
-  const ActiveStepComponent = steps[activeStep]?.component;
+  const ActiveStepComponent = steps[activeStep]?.element;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -33,7 +33,7 @@ export const InitializationPage: FC = () => {
         })}
       </Stepper>
 
-      {ActiveStepComponent && <ActiveStepComponent />}
+      {ActiveStepComponent}
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Box sx={{ flex: '1 1 auto' }} />
