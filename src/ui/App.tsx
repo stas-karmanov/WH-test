@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme, Theme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { InitializationPage } from './pages/initialization/InitializationPage';
-import { InitializationPageContextProvider } from './pages/initialization/InitializationPageContext';
+import { InitializationContextProvider } from './pages/initialization/InitializationContext';
 
 const theme: Theme = createTheme({
   palette: { mode: 'dark' },
@@ -14,9 +14,9 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <InitializationPageContextProvider>
+      <InitializationContextProvider>
         <InitializationPage />
-      </InitializationPageContextProvider>
+      </InitializationContextProvider>
     </ThemeProvider>
   );
 };

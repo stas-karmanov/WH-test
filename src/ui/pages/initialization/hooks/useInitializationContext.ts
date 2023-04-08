@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import { InitializationPageContext } from '../InitializationPageContext';
+import { InitializationContext } from '../InitializationContext';
 
 export const useInitializationContext = () => {
-  const context = useContext(InitializationPageContext);
+  const context = useContext(InitializationContext);
   if (context == null) throw new Error('InitializationPageContext not found.');
   return context;
 };
