@@ -1,28 +1,26 @@
 import { KeyStore } from './KeyStore';
-
-export interface EncryptedData {
-  cipher: ArrayBuffer;
-  iv: Uint8Array;
-}
+import { Cipher, CipherSerializer } from './CipherSerializer';
 
 export class EncryptionService {
   private readonly encoder: TextEncoder;
   private readonly decoder: TextDecoder;
 
-  constructor(private readonly keyStore: KeyStore) {
+  constructor(private readonly keyStore: KeyStore, private readonly cipherSerializer: CipherSerializer) {
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
   }
 
-  async encrypt(data: string): Promise<EncryptedData> {
+  async encrypt(data: string): Promise<string> {
     const key: CryptoKey = await this.keyStore.getKey();
     const encodedData: Uint8Array = this.encoder.encode(data);
     const iv: Uint8Array = await this.generateIv();
     const cipher: ArrayBuffer = await crypto.subtle.encrypt({ name: 'AES-CBC', iv }, key, encodedData);
-    return { cipher, iv };
+    return this.cipherSerializer.serialize({ cipher, iv });
   }
 
-  async decrypt(cipher: ArrayBuffer, key: CryptoKey, iv: Uint8Array): Promise<string> {
+  async decrypt(data: string): Promise<string> {
+    const key: CryptoKey = await this.keyStore.getKey();
+    const { cipher, iv }: Cipher = this.cipherSerializer.deserialize(data);
     const encodedData: ArrayBuffer = await crypto.subtle.decrypt({ name: 'AES-CBC', iv }, key, cipher);
     return this.decoder.decode(encodedData);
   }

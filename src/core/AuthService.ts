@@ -1,8 +1,8 @@
 import { UserEntity } from './UserEntity';
-import { HashService } from './HashService';
+import { HashService } from './encryption/HashService';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
 import { SessionRepositoryPort } from './ports/SessionRepositoryPort';
-import { EncryptionService } from './EncryptionService';
+import { EncryptionService } from './encryption/EncryptionService';
 
 export class AuthService {
   constructor(
@@ -14,7 +14,8 @@ export class AuthService {
 
   async register(password: string, secret: string): Promise<UserEntity> {
     const hashedPassword: string = await this.hashService.hash(password);
-    const user: UserEntity = new UserEntity(hashedPassword, secret);
+    const encryptedSecret: string = await this.encryptionService.encrypt(secret);
+    const user: UserEntity = new UserEntity(hashedPassword, encryptedSecret);
     await this.userRepository.save(user);
     return user;
   }

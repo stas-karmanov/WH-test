@@ -1,4 +1,4 @@
-import { KeyRepositoryPort } from './ports/KeyRepositoryPort';
+import { KeyRepositoryPort } from '../ports/KeyRepositoryPort';
 
 export class KeyStore {
   constructor(private readonly keyRepository: KeyRepositoryPort) {}

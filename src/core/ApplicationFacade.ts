@@ -6,6 +6,7 @@ import { UserMapper } from './UserMapper';
 import { UserDto } from './UserDto';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
 import { SecretGenerator } from './SecretGenerator';
+import { EncryptionService } from './encryption/EncryptionService';
 
 export class ApplicationFacade implements ApplicationPort {
   constructor(
@@ -14,6 +15,7 @@ export class ApplicationFacade implements ApplicationPort {
     private readonly userRepository: UserRepositoryPort,
     private readonly userMapper: UserMapper,
     private readonly secretGenerator: SecretGenerator,
+    private readonly encryptionService: EncryptionService,
   ) {}
 
   async register(): Promise<void> {
@@ -37,7 +39,8 @@ export class ApplicationFacade implements ApplicationPort {
   async regenerateSecret(): Promise<void> {
     await this.authService.checkAuthentication();
     const user: UserEntity = await this.userRepository.find();
-    user.updateSecret(this.secretGenerator.generate());
+    const secret: string = await this.encryptionService.encrypt(this.secretGenerator.generate());
+    user.updateSecret(secret);
     await this.userRepository.save(user);
   }
 

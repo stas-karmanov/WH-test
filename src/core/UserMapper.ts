@@ -1,9 +1,13 @@
 import { UserEntity } from './UserEntity';
 import { UserDto } from './UserDto';
+import { EncryptionService } from './encryption/EncryptionService';
 
 export class UserMapper {
-  toDto(entity: UserEntity): UserDto {
-    const secret: string = entity.getSecret();
+  constructor(private readonly encryptionService: EncryptionService) {}
+
+  async toDto(entity: UserEntity): Promise<UserDto> {
+    const encryptedSecret: string = entity.getSecret();
+    const secret: string = await this.encryptionService.decrypt(encryptedSecret);
     return { secret };
   }
 }

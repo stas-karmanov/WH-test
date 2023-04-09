@@ -2,7 +2,7 @@ import { ApplicationPort } from './core/ports/ApplicationPort';
 import { UserPersistenceMapper } from './persistence/UserPersistenceMapper';
 import { UserRepository } from './persistence/UserRepository';
 import { UserRepositoryPort } from './core/ports/UserRepositoryPort';
-import { HashService } from './core/HashService';
+import { HashService } from './core/encryption/HashService';
 import { AuthService } from './core/AuthService';
 import { ApplicationFacade } from './core/ApplicationFacade';
 import { CacheService } from './core/CacheService';
@@ -14,8 +14,9 @@ import { UserMapper } from './core/UserMapper';
 import { DbAdapter } from './persistence/db/DbAdapter';
 import { KeyRepository } from './persistence/KeyRepository';
 import { KeyRepositoryPort } from './core/ports/KeyRepositoryPort';
-import { EncryptionService } from './core/EncryptionService';
-import { KeyStore } from './core/KeyStore';
+import { EncryptionService } from './core/encryption/EncryptionService';
+import { KeyStore } from './core/encryption/KeyStore';
+import { CipherSerializer } from './core/encryption/CipherSerializer';
 
 export class ApplicationFactory {
   static create(): ApplicationPort {
@@ -36,11 +37,12 @@ export class ApplicationFactory {
       keyRepository,
     );
     const keyStore: KeyStore = new KeyStore(keyRepository);
-    const encryptionService: EncryptionService = new EncryptionService(keyStore);
+    const cipherSerializer: CipherSerializer = new CipherSerializer();
+    const encryptionService: EncryptionService = new EncryptionService(keyStore, cipherSerializer);
     const authService: AuthService = new AuthService(hashService, userRepository, sessionRepository, encryptionService);
-    const userMapper: UserMapper = new UserMapper();
+    const userMapper: UserMapper = new UserMapper(encryptionService);
 
-    return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator);
+    return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator, encryptionService);
   }
 
   private static createDbAdapter(): DbAdapter {
