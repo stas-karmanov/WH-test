@@ -12,7 +12,7 @@ const theme: Theme = createTheme({
       styleOverrides: {
         body: {
           minWidth: '600px',
-          minHeight: '400px',
+          minHeight: '205px',
         },
       },
     },
