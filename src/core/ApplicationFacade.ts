@@ -21,7 +21,7 @@ export class ApplicationFacade implements ApplicationPort {
   async register(): Promise<void> {
     const secret: string = this.initializationService.extractSecret();
     const password: string = this.initializationService.extractUserPassword();
-    const res = await this.encryptionService.encrypt(password);
+    // const res = await this.encryptionService.encrypt(password);
     await this.authService.register(password, secret);
   }
 
