@@ -1,6 +1,8 @@
 import { SecretGenerator } from './SecretGenerator';
 import { CacheService } from './CacheService';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
+import { SessionRepositoryPort } from './ports/SessionRepositoryPort';
+import { KeyRepositoryPort } from './ports/KeyRepositoryPort';
 
 export class InitializationService {
   private readonly secretCacheKey: string = 'userSecret';
@@ -10,6 +12,8 @@ export class InitializationService {
     private readonly secretGenerator: SecretGenerator,
     private readonly cacheService: CacheService,
     private readonly userRepository: UserRepositoryPort,
+    private readonly sessionRepository: SessionRepositoryPort,
+    private readonly keyRepository: KeyRepositoryPort,
   ) {}
 
   async isApplicationInitialized(): Promise<boolean> {
@@ -19,6 +23,12 @@ export class InitializationService {
     } catch {
       return false;
     }
+  }
+
+  async reset(): Promise<void> {
+    await this.sessionRepository.delete();
+    await this.userRepository.delete();
+    await this.keyRepository.delete();
   }
 
   initializeUser(password: string): void {

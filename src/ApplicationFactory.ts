@@ -28,13 +28,19 @@ export class ApplicationFactory {
     const cacheService: CacheService = new CacheService();
     const secretGenerator: SecretGenerator = new SecretGenerator();
     const hashService: HashService = new HashService();
-    const initializationService: InitializationService = new InitializationService(secretGenerator, cacheService, userRepository);
-    const authService: AuthService = new AuthService(hashService, userRepository, sessionRepository);
-    const userMapper: UserMapper = new UserMapper();
+    const initializationService: InitializationService = new InitializationService(
+      secretGenerator,
+      cacheService,
+      userRepository,
+      sessionRepository,
+      keyRepository,
+    );
     const keyStore: KeyStore = new KeyStore(keyRepository);
     const encryptionService: EncryptionService = new EncryptionService(keyStore);
+    const authService: AuthService = new AuthService(hashService, userRepository, sessionRepository, encryptionService);
+    const userMapper: UserMapper = new UserMapper();
 
-    return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator, encryptionService);
+    return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator);
   }
 
   private static createDbAdapter(): DbAdapter {

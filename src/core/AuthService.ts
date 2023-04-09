@@ -2,12 +2,14 @@ import { UserEntity } from './UserEntity';
 import { HashService } from './HashService';
 import { UserRepositoryPort } from './ports/UserRepositoryPort';
 import { SessionRepositoryPort } from './ports/SessionRepositoryPort';
+import { EncryptionService } from './EncryptionService';
 
 export class AuthService {
   constructor(
     private readonly hashService: HashService,
     private readonly userRepository: UserRepositoryPort,
     private readonly sessionRepository: SessionRepositoryPort,
+    private readonly encryptionService: EncryptionService,
   ) {}
 
   async register(password: string, secret: string): Promise<UserEntity> {
