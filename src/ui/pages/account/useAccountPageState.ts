@@ -1,5 +1,5 @@
 import { useApplicationPort } from '../../../ApplicationContext';
-import { useNavigate } from '../../router/useNavigate';
+import { useNavigate } from '../../router/hooks/useNavigate';
 import { useCallback, useEffect, useState } from 'react';
 import { UserDto } from '../../../core/UserDto';
 import { Page } from '../../router/config';

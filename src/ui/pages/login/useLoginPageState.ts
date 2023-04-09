@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 
 import { useApplicationPort } from '../../../ApplicationContext';
-import { useNavigate } from '../../router/useNavigate';
+import { useNavigate } from '../../router/hooks/useNavigate';
 import { FormValues, useForm } from '../../common/useForm';
 import { Page } from '../../router/config';
 

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { steps } from '../InitializationPage';
 import { useApplicationPort } from '../../../../ApplicationContext';
-import { useNavigate } from '../../../router/useNavigate';
+import { useNavigate } from '../../../router/hooks/useNavigate';
 import { Page } from '../../../router/config';
 
 export interface InitializationState {

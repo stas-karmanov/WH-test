@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { useNavigate } from './router/useNavigate';
-import { useApplicationPort } from '../ApplicationContext';
-import { Page } from './router/config';
+import { useNavigate } from './useNavigate';
+import { useApplicationPort } from '../../../ApplicationContext';
+import { Page } from '../config';
 
 export const useInitialNavigation = () => {
   const navigate = useNavigate();

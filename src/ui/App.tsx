@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
 
 import { RouterOutlet } from './router/RouterOutlet';
-import { useInitialNavigation } from './useInitialNavigation';
+import { useInitialNavigation } from './router/hooks/useInitialNavigation';
 
 let theme: Theme = createTheme({
   components: {

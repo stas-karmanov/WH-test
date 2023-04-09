@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { RouterContext } from './Router';
+import { RouterContext } from '../Router';
 
 export const useNavigate = () => {
   const { setActivePage } = useContext(RouterContext);
