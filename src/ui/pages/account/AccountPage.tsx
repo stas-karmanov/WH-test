@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Alert, Box, Snackbar, IconButton, Typography } from '@mui/material';
+import { Alert, Box, Snackbar, IconButton, Typography, Tooltip } from '@mui/material';
 import { Logout, Autorenew } from '@mui/icons-material';
 
 import { useAccountPageState } from './useAccountPageState';
@@ -13,14 +13,19 @@ export const AccountPage: FC = () => {
         {user && (
           <>
             <Typography>{user.secret}</Typography>
-            <IconButton onClick={handleSecretRegeneration}>
-              <Autorenew />
-            </IconButton>
+            <Tooltip title="Regenerate secret">
+              <IconButton onClick={handleSecretRegeneration}>
+                <Autorenew />
+              </IconButton>
+            </Tooltip>
           </>
         )}
-        <IconButton onClick={handleLogout}>
-          <Logout />
-        </IconButton>
+
+        <Tooltip title="Logout">
+          <IconButton onClick={handleLogout}>
+            <Logout />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Snackbar open={!!error} autoHideDuration={2000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} onClose={() => setError('')}>
         <Alert severity="error">{error}</Alert>
