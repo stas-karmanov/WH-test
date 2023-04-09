@@ -1,7 +1,7 @@
 import { UserRepositoryPort } from '../core/ports/UserRepositoryPort';
 import { StorageService } from './StorageService';
 import { UserEntity } from '../core/UserEntity';
-import { UserSchema } from './schemas/UserSchema';
+import { UserSchema } from './UserSchema';
 import { UserPersistenceMapper } from './UserPersistenceMapper';
 
 export class UserRepository implements UserRepositoryPort {

@@ -1,5 +1,5 @@
 import { UserEntity } from '../core/UserEntity';
-import { UserSchema } from './schemas/UserSchema';
+import { UserSchema } from './UserSchema';
 
 export class UserPersistenceMapper {
   toPersistence(entity: UserEntity): UserSchema {
