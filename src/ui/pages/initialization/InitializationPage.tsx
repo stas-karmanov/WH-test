@@ -13,7 +13,7 @@ interface StepItem {
 
 export const steps: StepItem[] = [
   { label: 'Welcome!', element: <GreetingStep /> },
-  { label: 'This is your secret', element: <SecretStep /> },
+  { label: 'Provision a secret', element: <SecretStep /> },
   { label: 'Create a password', element: <PasswordStep /> },
 ];
 
@@ -33,7 +33,7 @@ export const InitializationPage: FC = () => {
         })}
       </Stepper>
 
-      {ActiveStepComponent}
+      <Box sx={{ mt: 1 }}>{ActiveStepComponent}</Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Box sx={{ flex: '1 1 auto' }} />

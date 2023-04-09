@@ -1,0 +1,12 @@
+{
+  "name": "WH-test",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Click to view a popup",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

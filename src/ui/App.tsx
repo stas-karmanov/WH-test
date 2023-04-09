@@ -4,8 +4,19 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { RouterOutlet } from './router/RouterOutlet';
 import { useInitialNavigation } from './useInitialNavigation';
+import { Box } from '@mui/material';
 
 const theme: Theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          minWidth: '600px',
+          minHeight: '400px',
+        },
+      },
+    },
+  },
   palette: { mode: 'dark' },
 });
 
@@ -15,7 +26,9 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterOutlet />
+      <Box sx={{ m: 2 }}>
+        <RouterOutlet />
+      </Box>
     </ThemeProvider>
   );
 };

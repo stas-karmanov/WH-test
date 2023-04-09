@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useInitializationContext } from '../hooks/useInitializationContext';
 
@@ -10,5 +10,10 @@ export const GreetingStep: FC = () => {
     makeStepValid();
   }, [makeStepValid]);
 
-  return <Typography variant="body1">Welcome to this test extension!</Typography>;
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <Typography variant="h4">Welcome to this extension!</Typography>
+      <Typography variant="subtitle2">Press next to continue</Typography>
+    </Box>
+  );
 };

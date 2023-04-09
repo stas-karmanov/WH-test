@@ -11,14 +11,12 @@ export const SecretStep: FC = () => {
 
   useEffect(() => {
     makeStepInvalid();
-  }, [makeStepInvalid]);
 
-  useEffect(() => {
     applicationPort.initializeSecret().then((s: string) => {
       setSecret(s);
       makeStepValid();
     });
-  }, [applicationPort, makeStepValid]);
+  }, [applicationPort, makeStepInvalid, makeStepValid]);
 
   return (
     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
