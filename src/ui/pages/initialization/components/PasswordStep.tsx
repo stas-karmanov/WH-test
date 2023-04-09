@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { FormValues, useForm } from '../../../common/useForm';
 import { useInitializationContext } from '../hooks/useInitializationContext';
@@ -48,34 +48,39 @@ export const PasswordStep: FC = () => {
   }, [applicationPort, makeStepValid, makeStepInvalid, valid, controls.password.value]);
 
   return (
-    <Box
-      component="form"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Control
-        sx={{ mr: 1 }}
-        type="password"
-        label="Password"
-        name="password"
-        required
-        control={controls.password}
-        onChange={handelInputChange}
-        onBlur={handleBlur}
-      ></Control>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <Typography variant="h5">Create a password to complete the initialization</Typography>
 
-      <Control
-        type="password"
-        label="Confirm Password"
-        name="confirmation"
-        required
-        control={controls.confirmation}
-        onChange={handelInputChange}
-        onBlur={handleBlur}
-      ></Control>
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          mt: 1,
+        }}
+      >
+        <Control
+          sx={{ mr: 1 }}
+          type="password"
+          label="Password"
+          name="password"
+          required
+          control={controls.password}
+          onChange={handelInputChange}
+          onBlur={handleBlur}
+        ></Control>
+
+        <Control
+          type="password"
+          label="Confirm Password"
+          name="confirmation"
+          required
+          control={controls.confirmation}
+          onChange={handelInputChange}
+          onBlur={handleBlur}
+        ></Control>
+      </Box>
     </Box>
   );
 };

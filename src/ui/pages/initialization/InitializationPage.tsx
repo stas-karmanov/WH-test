@@ -33,7 +33,7 @@ export const InitializationPage: FC = () => {
         })}
       </Stepper>
 
-      <Box sx={{ mt: 1 }}>{ActiveStepComponent}</Box>
+      <Box sx={{ mt: 1, height: 120 }}>{ActiveStepComponent}</Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Box sx={{ flex: '1 1 auto' }} />
