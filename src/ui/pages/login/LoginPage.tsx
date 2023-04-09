@@ -12,7 +12,7 @@ export const LoginPage: FC = () => {
     <>
       <Box sx={{ m: 1, display: 'flex', justifyContent: 'space-between' }}>
         <Box></Box>
-        <Typography>Login to proceed</Typography>
+        <Typography variant="h5">Login to proceed</Typography>
         <Tooltip title="Reset app to initial state">
           <IconButton onClick={handleReset}>
             <RestartAlt />
@@ -25,7 +25,7 @@ export const LoginPage: FC = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}
         onSubmit={handleLogin}
       >
@@ -40,7 +40,7 @@ export const LoginPage: FC = () => {
           onBlur={handleBlur}
         ></Control>
 
-        <Button variant="contained" type="submit" disabled={!valid}>
+        <Button sx={{ mt: '10px' }} variant="contained" type="submit" disabled={!valid}>
           Login
         </Button>
       </Box>
