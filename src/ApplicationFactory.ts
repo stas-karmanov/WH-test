@@ -1,5 +1,4 @@
 import { ApplicationPort } from './core/ports/ApplicationPort';
-import { StorageService } from './persistence/StorageService';
 import { UserPersistenceMapper } from './persistence/UserPersistenceMapper';
 import { UserRepository } from './persistence/UserRepository';
 import { UserRepositoryPort } from './core/ports/UserRepositoryPort';
@@ -12,13 +11,14 @@ import { InitializationService } from './core/InitializationService';
 import { SessionRepositoryPort } from './core/ports/SessionRepositoryPort';
 import { SessionRepository } from './persistence/SessionRepository';
 import { UserMapper } from './core/UserMapper';
+import { DbAdapter } from './persistence/db/DbAdapter';
 
 export class ApplicationFactory {
   static create(): ApplicationPort {
-    const storageService: StorageService = new StorageService();
+    const dbAdapter: DbAdapter = this.createDbAdapter();
     const userPersistenceMapper: UserPersistenceMapper = new UserPersistenceMapper();
-    const userRepository: UserRepositoryPort = new UserRepository(storageService, userPersistenceMapper);
-    const sessionRepository: SessionRepositoryPort = new SessionRepository(storageService);
+    const userRepository: UserRepositoryPort = new UserRepository(dbAdapter, userPersistenceMapper);
+    const sessionRepository: SessionRepositoryPort = new SessionRepository(dbAdapter);
 
     const cacheService: CacheService = new CacheService();
     const secretGenerator: SecretGenerator = new SecretGenerator();
@@ -28,5 +28,11 @@ export class ApplicationFactory {
     const userMapper: UserMapper = new UserMapper();
 
     return new ApplicationFacade(authService, initializationService, userRepository, userMapper, secretGenerator);
+  }
+
+  private static createDbAdapter(): DbAdapter {
+    const dbAdapter: DbAdapter = new DbAdapter();
+    dbAdapter.connect('wh-test', [UserRepository.Store, SessionRepository.Store]);
+    return dbAdapter;
   }
 }
