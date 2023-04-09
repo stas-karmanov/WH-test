@@ -6,8 +6,8 @@ export interface ExtractedPromise<T = unknown> {
 
 export class Utils {
   static getExtractedPromise<T = unknown>(): ExtractedPromise<T> {
-    let resolve: (value: T) => void;
-    let reject: (error?: Error | null) => void;
+    let resolve: (value: T) => void = (_: T) => {};
+    let reject: (error?: Error | null) => void = () => {};
 
     const promise$ = new Promise<T>((res, rej) => {
       resolve = res;

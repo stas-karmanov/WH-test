@@ -34,7 +34,7 @@ export class CipherSerializer {
   }
 
   private serializeBuffer(buffer: ArrayBuffer): string {
-    return btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(buffer) as unknown as number[]));
   }
 
   private parseCipher(serialized: string): SerializedCipher {
