@@ -2,13 +2,10 @@ import { KeyStore } from './KeyStore';
 import { Cipher, CipherSerializer } from './CipherSerializer';
 
 export class EncryptionService {
-  private readonly encoder: TextEncoder;
-  private readonly decoder: TextDecoder;
+  private readonly encoder: TextEncoder = new TextEncoder();
+  private readonly decoder: TextDecoder = new TextDecoder();
 
-  constructor(private readonly keyStore: KeyStore, private readonly cipherSerializer: CipherSerializer) {
-    this.encoder = new TextEncoder();
-    this.decoder = new TextDecoder();
-  }
+  constructor(private readonly keyStore: KeyStore, private readonly cipherSerializer: CipherSerializer) {}
 
   async encrypt(data: string): Promise<string> {
     const key: CryptoKey = await this.keyStore.getKey();
