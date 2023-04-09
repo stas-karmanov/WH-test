@@ -16,7 +16,7 @@ export class UserRepository implements UserRepositoryPort {
   }
 
   async find(): Promise<UserEntity> {
-    const persistence: UserSchema | null = await this.dbAdapter.get<UserSchema>(UserRepository.Store, this.userKey);
+    const persistence: UserSchema | undefined = await this.dbAdapter.get<UserSchema>(UserRepository.Store, this.userKey);
     if (!persistence) throw new Error('User not found');
     return this.userMapper.toDomain(persistence);
   }
