@@ -15,7 +15,7 @@ export const useAccountPageState = () => {
       .getCurrentUser()
       .then((dto: UserDto) => setUser(dto))
       .catch((error: unknown) => {
-        const message: string = (error as Error).message ?? 'Cannot get user';
+        const message: string = (error as Error)?.message ?? 'Cannot get user';
         setError(message);
       });
   }, [applicationPort, setUser]);

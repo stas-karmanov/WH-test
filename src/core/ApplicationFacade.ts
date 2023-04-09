@@ -16,18 +16,22 @@ export class ApplicationFacade implements ApplicationPort {
     private readonly secretGenerator: SecretGenerator,
   ) {}
 
-  async register(): Promise<UserEntity> {
+  async register(): Promise<void> {
     const secret: string = this.initializationService.extractSecret();
     const password: string = this.initializationService.extractUserPassword();
-    return this.authService.register(password, secret);
+    await this.authService.register(password, secret);
   }
 
-  async login(password: string): Promise<UserEntity> {
-    return this.authService.login(password);
+  async login(password: string): Promise<void> {
+    await this.authService.login(password);
   }
 
   async logout(): Promise<void> {
     await this.authService.logout();
+  }
+
+  async reset(): Promise<void> {
+    await this.userRepository.delete();
   }
 
   async regenerateSecret(): Promise<void> {

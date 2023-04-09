@@ -32,10 +32,15 @@ export const useLoginPageState = () => {
       await applicationPort.login(controls.password.value);
       navigate(Page.Account);
     } catch (error: unknown) {
-      const message = (error as Error).message ?? 'Login error';
+      const message = (error as Error)?.message ?? 'Login error';
       setLoginError(message);
     }
   };
 
-  return { loginError, controls, valid, handleLogin, handelInputChange, setLoginError, handleBlur };
+  const handleReset = async () => {
+    await applicationPort.reset();
+    navigate(Page.Initialization);
+  };
+
+  return { loginError, controls, valid, handleLogin, handleReset, handelInputChange, setLoginError, handleBlur };
 };

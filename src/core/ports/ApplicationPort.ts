@@ -1,10 +1,10 @@
-import { UserEntity } from '../UserEntity';
 import { UserDto } from '../UserDto';
 
 export interface ApplicationPort {
-  register(): Promise<UserEntity>;
-  login(password: string): Promise<UserEntity>;
+  register(): Promise<void>;
+  login(password: string): Promise<void>;
   logout(): Promise<void>;
+  reset(): Promise<void>;
   getCurrentUser(): Promise<UserDto>;
   regenerateSecret(): Promise<void>;
   isAuthenticated(): Promise<boolean>;

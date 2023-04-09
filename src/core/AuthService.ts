@@ -14,7 +14,6 @@ export class AuthService {
     const hashedPassword: string = await this.hashService.hash(password);
     const user: UserEntity = new UserEntity(hashedPassword, secret);
     await this.userRepository.save(user);
-    await this.sessionRepository.create();
     return user;
   }
 

@@ -19,4 +19,8 @@ export class UserRepository implements UserRepositoryPort {
     if (!persistence) throw new Error('User not found');
     return this.userMapper.toDomain(persistence);
   }
+
+  async delete(): Promise<void> {
+    this.storageService.delete(this.userKey);
+  }
 }

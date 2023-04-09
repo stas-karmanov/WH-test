@@ -19,7 +19,7 @@ export const steps: StepItem[] = [
 
 export const InitializationPage: FC = () => {
   const { activeStep, stepState, handleNext } = useInitializationContext();
-  const ActiveStepComponent = steps[activeStep]?.element;
+  const ActiveStepComponent: JSX.Element | undefined = steps[activeStep]?.element;
 
   return (
     <Box sx={{ width: '100%' }}>
